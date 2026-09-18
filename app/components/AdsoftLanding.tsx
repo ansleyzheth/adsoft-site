@@ -125,14 +125,15 @@ export function AdsoftLanding() {
   }, []);
 
   const showHeroVideo = isMounted && !reduceMotion && !isMobile && !videoUnavailable;
-  const heroVideoSources = ["/videos/adsoft-here.mp4", "/videos/adsoft-hero.mp4"];
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const heroVideoSources = [`${basePath}/videos/adsoft-here.mp4`, `${basePath}/videos/adsoft-hero.mp4`];
 
   return (
     <main className="site-shell" id="inicio">
       <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
         <div className="header-inner">
           <a className="brand-mark" href="#inicio" aria-label="ADSOFT SYSTEMS, início" onClick={(event) => handleAnchorClick(event, "inicio")}>
-            <Image src="/adsoft-logo.png" alt="ADSOFT SYSTEMS" width={155} height={72} priority />
+            <Image src={`${basePath}/adsoft-logo.png`} alt="ADSOFT SYSTEMS" width={155} height={72} priority />
           </a>
           <nav className="desktop-nav" aria-label="Navegação principal">
             {navigation.map((item) => <a key={item.id} className={activeSection === item.id ? "active" : ""} aria-current={activeSection === item.id ? "page" : undefined} href={`#${item.id}`} onClick={(event) => handleAnchorClick(event, item.id)}>{item.label}</a>)}
