@@ -106,6 +106,24 @@ export function AdsoftLanding() {
     event.preventDefault();
     setFormSent(true);
   };
+
+  const handleAnchorClick = (event: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    event.preventDefault();
+    setMenuOpen(false);
+    setActiveSection(id);
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    }
+    window.history.replaceState({}, "", window.location.pathname + window.location.search);
+  };
+
+  useEffect(() => {
+    if (window.location.hash) {
+      window.history.replaceState({}, "", window.location.pathname + window.location.search);
+    }
+  }, []);
+
   const showHeroVideo = isMounted && !reduceMotion && !isMobile && !videoUnavailable;
   const heroVideoSources = ["/videos/adsoft-here.mp4", "/videos/adsoft-hero.mp4"];
 
@@ -113,21 +131,21 @@ export function AdsoftLanding() {
     <main className="site-shell" id="inicio">
       <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
         <div className="header-inner">
-          <a className="brand-mark" href="#inicio" aria-label="ADSOFT SYSTEMS, início">
+          <a className="brand-mark" href="#inicio" aria-label="ADSOFT SYSTEMS, início" onClick={(event) => handleAnchorClick(event, "inicio")}>
             <Image src="/adsoft-logo.png" alt="ADSOFT SYSTEMS" width={155} height={72} priority />
           </a>
           <nav className="desktop-nav" aria-label="Navegação principal">
-            {navigation.map((item) => <a key={item.id} className={activeSection === item.id ? "active" : ""} aria-current={activeSection === item.id ? "page" : undefined} href={`#${item.id}`}>{item.label}</a>)}
+            {navigation.map((item) => <a key={item.id} className={activeSection === item.id ? "active" : ""} aria-current={activeSection === item.id ? "page" : undefined} href={`#${item.id}`} onClick={(event) => handleAnchorClick(event, item.id)}>{item.label}</a>)}
           </nav>
-          <a className="header-cta" href="#contato">Começar um projeto <ArrowUpRight size={16} strokeWidth={1.8} /></a>
+          <a className="header-cta" href="#contato" onClick={(event) => handleAnchorClick(event, "contato")}>Começar um projeto <ArrowUpRight size={16} strokeWidth={1.8} /></a>
           <button className="menu-toggle" type="button" aria-label={menuOpen ? "Fechar menu" : "Abrir menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
         <AnimatePresence>
           {menuOpen && <motion.nav className="mobile-nav" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={transition} aria-label="Navegação móvel">
-            {navigation.map((item) => <a key={item.id} aria-current={activeSection === item.id ? "page" : undefined} href={`#${item.id}`} onClick={() => setMenuOpen(false)}>{item.label}</a>)}
-            <a className="mobile-cta" href="#contato" onClick={() => setMenuOpen(false)}>Começar um projeto <ArrowUpRight size={16} /></a>
+            {navigation.map((item) => <a key={item.id} aria-current={activeSection === item.id ? "page" : undefined} href={`#${item.id}`} onClick={(event) => handleAnchorClick(event, item.id)}>{item.label}</a>)}
+            <a className="mobile-cta" href="#contato" onClick={(event) => handleAnchorClick(event, "contato")}>Começar um projeto <ArrowUpRight size={16} /></a>
           </motion.nav>}
         </AnimatePresence>
       </header>
@@ -146,7 +164,7 @@ export function AdsoftLanding() {
             <div className="eyebrow"><span className="eyebrow-dot" /> Engenharia digital para o próximo passo</div>
             <h1 id="hero-title">Transformamos ideias em <span>soluções digitais.</span></h1>
             <p className="hero-description">Sites, sistemas, automações e soluções inteligentes para conectar sua empresa, otimizar processos e escalar resultados.</p>
-            <div className="hero-actions"><a className="button button-primary" href="#contato">Vamos conversar <ArrowUpRight size={18} /></a><a className="button button-secondary" href="#solucoes">Conheça nossas soluções <ChevronDown size={17} /></a></div>
+            <div className="hero-actions"><a className="button button-primary" href="#contato" onClick={(event) => handleAnchorClick(event, "contato")}>Vamos conversar <ArrowUpRight size={18} /></a><a className="button button-secondary" href="#solucoes" onClick={(event) => handleAnchorClick(event, "solucoes")}>Conheça nossas soluções <ChevronDown size={17} /></a></div>
             <div className="hero-slogan">CONECTAMOS <b>•</b> OTIMIZAMOS <b>•</b> ESCALAMOS</div>
           </motion.div>
 
@@ -228,7 +246,7 @@ export function AdsoftLanding() {
       </section>
 
       <footer className="site-footer">
-        <div className="footer-inner"><a className="footer-brand" href="#inicio">ADSOFT <span>SYSTEMS</span></a><p>CONECTAMOS <b>•</b> OTIMIZAMOS <b>•</b> ESCALAMOS</p><nav aria-label="Links do rodapé">{navigation.map((item) => <a key={item.id} href={`#${item.id}`}>{item.label}</a>)}</nav><small>© 2026 ADSOFT SYSTEMS. Em desenvolvimento.</small></div>
+        <div className="footer-inner"><a className="footer-brand" href="#inicio" onClick={(event) => handleAnchorClick(event, "inicio")}>ADSOFT <span>SYSTEMS</span></a><p>CONECTAMOS <b>•</b> OTIMIZAMOS <b>•</b> ESCALAMOS</p><nav aria-label="Links do rodapé">{navigation.map((item) => <a key={item.id} href={`#${item.id}`} onClick={(event) => handleAnchorClick(event, item.id)}>{item.label}</a>)}</nav><small>© 2026 ADSOFT SYSTEMS. Em desenvolvimento.</small></div>
       </footer>
     </main>
   );
