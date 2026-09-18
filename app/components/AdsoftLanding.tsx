@@ -107,6 +107,7 @@ export function AdsoftLanding() {
     setFormSent(true);
   };
   const showHeroVideo = isMounted && !reduceMotion && !isMobile && !videoUnavailable;
+  const heroVideoSources = ["/videos/adsoft-here.mp4", "/videos/adsoft-hero.mp4"];
 
   return (
     <main className="site-shell" id="inicio">
@@ -135,13 +136,13 @@ export function AdsoftLanding() {
         <div className="hero-video-layer" aria-hidden="true">
           <div className="hero-video-fallback" />
           {showHeroVideo && <video className="hero-video" autoPlay muted loop playsInline preload="metadata" onError={() => setVideoUnavailable(true)}>
-            <source src="/videos/adsoft-hero.mp4" type="video/mp4" />
+            {heroVideoSources.map((src) => <source key={src} src={src} type="video/mp4" />)}
           </video>}
         </div>
         <div className="hero-video-overlay" aria-hidden="true" />
         <div className="hero-grid" aria-hidden="true" /><div className="hero-glow hero-glow-one" aria-hidden="true" /><div className="hero-glow hero-glow-two" aria-hidden="true" />
         <div className="hero-content">
-          <motion.div className="hero-copy" initial={{ opacity: 0, y: reduceMotion ? 0 : 22 }} animate={{ opacity: 1, y: 0 }} transition={transition}>
+          <motion.div className="hero-copy" initial={{ opacity: 0, y: reduceMotion ? 0 : 22 }} animate={{ opacity: 1, y: 0, x: 0 }} transition={transition}>
             <div className="eyebrow"><span className="eyebrow-dot" /> Engenharia digital para o próximo passo</div>
             <h1 id="hero-title">Transformamos ideias em <span>soluções digitais.</span></h1>
             <p className="hero-description">Sites, sistemas, automações e soluções inteligentes para conectar sua empresa, otimizar processos e escalar resultados.</p>
@@ -149,7 +150,7 @@ export function AdsoftLanding() {
             <div className="hero-slogan">CONECTAMOS <b>•</b> OTIMIZAMOS <b>•</b> ESCALAMOS</div>
           </motion.div>
 
-          <motion.div className="ecosystem" initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.96, x: reduceMotion ? 0 : 22 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ ...transition, delay: 0.16 }} aria-label="Ecossistema ADSOFT: Website, ADSOFT Core e automação, IA, dados e sistemas">
+          <motion.div className="ecosystem" initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.96, x: reduceMotion ? 0 : 22 }} animate={{ opacity: 1, scale: 1, x: 0, y: 0 }} transition={{ ...transition, delay: 0.16 }} aria-label="Ecossistema ADSOFT: Website, ADSOFT Core e automação, IA, dados e sistemas">
             <div className="ecosystem-label"><span /> ECOSSISTEMA ADSOFT</div>
             <div className="network-board">
               <div className="network-line line-horizontal" /><div className="network-line line-vertical" /><div className="network-line line-diagonal" />
@@ -175,7 +176,7 @@ export function AdsoftLanding() {
             <p>Da presença digital ao software, conectamos tecnologia, dados, IA e automação para que cada etapa prepare a próxima.</p>
           </motion.div>
           <div className="solutions-grid">
-            {solutions.map(({ title, description, icon: Icon }, index) => <motion.article className="solution-card" key={title} initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ ...transition, delay: reduceMotion ? 0 : index * 0.04 }}><div className="card-index">0{index + 1}</div><Icon size={21} strokeWidth={1.5} /><h3>{title}</h3><p>{description}</p></motion.article>)}
+            {solutions.map(({ title, description, icon: Icon }, index) => <motion.article className="solution-card" key={title} initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} whileHover={reduceMotion ? undefined : { y: -8, scale: 1.01 }} transition={{ ...transition, delay: reduceMotion ? 0 : index * 0.04 }}><div className="card-index">0{index + 1}</div><Icon size={21} strokeWidth={1.5} /><h3>{title}</h3><p>{description}</p></motion.article>)}
           </div>
         </div>
       </section>
@@ -187,7 +188,7 @@ export function AdsoftLanding() {
             <p>Projetos demonstrativos com demos funcionais para explorar como diferentes negócios podem evoluir com tecnologia conectada.</p>
           </motion.div>
           <div className="projects-grid">
-            {projects.map(({ title, description, icon: Icon }, index) => <motion.article className="project-card" key={title} initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ ...transition, delay: reduceMotion ? 0 : index * 0.04 }}><div className="project-card-top"><span className="project-label">Projeto demonstrativo</span><span className="project-number">0{index + 1}</span></div><Icon size={24} strokeWidth={1.4} /><h3>{title}</h3><p>{description}</p><span className="project-link">Explorar conceito <ArrowRight size={15} /></span></motion.article>)}
+            {projects.map(({ title, description, icon: Icon }, index) => <motion.article className="project-card" key={title} initial={{ opacity: 0, y: reduceMotion ? 0 : 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} whileHover={reduceMotion ? undefined : { y: -8, scale: 1.01 }} transition={{ ...transition, delay: reduceMotion ? 0 : index * 0.04 }}><div className="project-card-top"><span className="project-label">Projeto demonstrativo</span><span className="project-number">0{index + 1}</span></div><Icon size={24} strokeWidth={1.4} /><h3>{title}</h3><p>{description}</p><span className="project-link">Explorar conceito <ArrowRight size={15} /></span></motion.article>)}
           </div>
         </div>
       </section>
